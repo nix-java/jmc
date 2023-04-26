@@ -10,7 +10,6 @@
  , makeWrapper
  , wrapGAppsHook
  , gtk3 
- , Cocoa ? null
 }:
 stdenv.mkDerivation {
   inherit version;
@@ -19,7 +18,7 @@ stdenv.mkDerivation {
   src = fetchurl {
     inherit sha256 url;
   };
-  nativeBuildInputs = [ autoPatchelfHook makeWrapper ] ++ lib.optionals stdenv.isLinux [ wrapGAppsHook ];
+  nativeBuildInputs = [ autoPatchelfHook makeWrapper wrapGAppsHook ];
   installPhase = ''
     install -m755 -D jmc $out/bin/jmc
     cp jmc.ini $out/bin/
@@ -28,8 +27,7 @@ stdenv.mkDerivation {
   '';
   preFixup = ''
     wrapProgram $out/bin/jmc --prefix PATH : "${jre}/bin" \
-      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath
-        (lib.optionals stdenv.isLinux [ gtk3 ] ++ lib.optionals stdenv.isDarwin [ Cocoa ])}"
+      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath ([ gtk3 ])}"
   '';
   meta = with lib;
     {

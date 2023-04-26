@@ -18,10 +18,11 @@
           hash = "sha256-CkN9/8xenVYSyBxJswdw93NY5fLvAgH7qsgmv+yg/40=";
           prefix = "linux.gtk.x86_64";
         };
-        x86_64-darwin = {
-          prefix = "macos.cocoa.x86_64";
-          hash = "sha256-0z51jm7a6wm9zmq66g6m72r3lb2yvifp5ff7p58cbilnal3fkd87";
-        };
+        # TODO: Need to check how Darwin binaries work
+        # x86_64-darwin = {
+        #   prefix = "macos.cocoa.x86_64";
+        #   hash = "sha256-0z51jm7a6wm9zmq66g6m72r3lb2yvifp5ff7p58cbilnal3fkd87";
+        # };
       };
     in flake-utils.lib.eachSystem (builtins.attrNames platforms) (system:
       let
