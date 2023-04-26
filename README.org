@@ -1,6 +1,6 @@
 * Nix flake for JDK Mission Control
 
-This repository contains a flake which provides a derivation for JMC.
+This repository contains a flake which provides a derivation for [[https://github.com/openjdk/jmc][JMC]].
 
 It currently provides a flake with a derivation packaging up the pre-built binaries from the [[https://adoptium.net][Eclipse Adoptium]] project.
 
