@@ -1,4 +1,5 @@
 {  stdenv
+ , url
  , version
  , sha256
  , nix-filter
@@ -9,16 +10,16 @@
  , makeWrapper
  , wrapGAppsHook
  , gtk3 
+ , Cocoa ? null
 }:
 stdenv.mkDerivation {
   inherit version;
   name = "jmc";
   sourceRoot = "JDK Mission Control";
   src = fetchurl {
-    url = "https://github.com/adoptium/jmc-build/releases/download/${version}/org.openjdk.jmc-${version}-linux.gtk.x86_64.tar.gz";
-    inherit sha256;
+    inherit sha256 url;
   };
-  nativeBuildInputs = [ autoPatchelfHook makeWrapper wrapGAppsHook ];
+  nativeBuildInputs = [ autoPatchelfHook makeWrapper ] ++ lib.optionals stdenv.isLinux [ wrapGAppsHook ];
   installPhase = ''
     install -m755 -D jmc $out/bin/jmc
     cp jmc.ini $out/bin/
@@ -27,7 +28,8 @@ stdenv.mkDerivation {
   '';
   preFixup = ''
     wrapProgram $out/bin/jmc --prefix PATH : "${jre}/bin" \
-      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ gtk3 ]}"
+      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath
+        (lib.optionals stdenv.isLinux [ gtk3 ] ++ lib.optionals stdenv.isDarwin [ Cocoa ])}"
   '';
   meta = with lib;
     {
