@@ -1,0 +1,18 @@
+* Nix flake for JDK Mission Control
+
+This repository contains a flake which provides a derivation for JMC.
+
+It currently provides a flake with a derivation packaging up the pre-built binaries from the [[https://adoptium.net][Eclipse Adoptium]] project.
+
+** Usage
+
+The flake provides a single default package, ~jmc~. If you have flakes installed, you should be able to add the ~jmc~ command to your path.
+
+#+begin_src sh
+  nix shell github:nix-java/jmc
+  jmc
+#+end_src
+
+*** Known issues
+
+ - The derivation currently does not work on [[https://swaywm.org/][sway]] (see [[https://github.com/NixOS/nixpkgs/issues/76168][nixpkgs#76168]]).
