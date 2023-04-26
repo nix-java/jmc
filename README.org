@@ -16,3 +16,11 @@ The flake provides a single default package, ~jmc~. If you have flakes installed
 *** Known issues
 
  - The derivation currently does not work on [[https://swaywm.org/][sway]] (see [[https://github.com/NixOS/nixpkgs/issues/76168][nixpkgs#76168]]).
+
+** FAQ
+
+*** Does this derivation build from source?
+
+Currently, no. The build for JMC is rather [[https://github.com/openjdk/jmc#building-mission-control-from-source][complicated]] and involves bootstrapping itself by running a local maven server. Pull requests welcome.
+
+
